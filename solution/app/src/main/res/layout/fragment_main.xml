@@ -30,7 +30,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 app:remoteUrl="@{viewModel.imageOfTheDayUrl}"
-                android:contentDescription="@string/image_of_the_day" />
+                android:contentDescription="@{viewModel.imageOfTheDayContentDescription}" />
 
             <TextView
                 android:id="@+id/textView"
