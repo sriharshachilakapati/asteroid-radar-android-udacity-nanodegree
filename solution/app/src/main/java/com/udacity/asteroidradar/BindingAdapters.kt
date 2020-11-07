@@ -6,20 +6,24 @@ import androidx.databinding.BindingAdapter
 
 @BindingAdapter("statusIcon")
 fun bindAsteroidStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.ic_status_potentially_hazardous)
-    } else {
-        imageView.setImageResource(R.drawable.ic_status_normal)
-    }
+    imageView.setImageResource(
+        if (isHazardous) {
+            R.drawable.ic_status_potentially_hazardous
+        } else {
+            R.drawable.ic_status_normal
+        }
+    )
 }
 
 @BindingAdapter("asteroidStatusImage")
 fun bindDetailsStatusImage(imageView: ImageView, isHazardous: Boolean) {
-    if (isHazardous) {
-        imageView.setImageResource(R.drawable.asteroid_hazardous)
-    } else {
-        imageView.setImageResource(R.drawable.asteroid_safe)
-    }
+    imageView.setImageResource(
+        if (isHazardous) {
+            R.drawable.asteroid_hazardous
+        } else {
+            R.drawable.asteroid_safe
+        }
+    )
 }
 
 @BindingAdapter("astronomicalUnitText")
