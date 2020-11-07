@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.udacity.asteroidradar.main.MainFragment"
+        android:name="com.udacity.asteroidradar.ui.main.MainFragment"
         android:label="Home"
         tools:layout="@layout/fragment_main">
 
@@ -18,13 +18,13 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.udacity.asteroidradar.detail.DetailFragment"
+        android:name="com.udacity.asteroidradar.ui.detail.DetailFragment"
         android:label="Asteroid Details"
         tools:layout="@layout/fragment_detail">
 
         <argument
             android:name="selectedAsteroid"
-            app:argType="com.udacity.asteroidradar.Asteroid" />
+            app:argType="com.udacity.asteroidradar.data.model.Asteroid" />
 
     </fragment>
 
