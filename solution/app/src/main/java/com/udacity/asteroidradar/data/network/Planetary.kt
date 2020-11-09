@@ -6,6 +6,11 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
+/**
+ * Backend API interface for the Planetary API from NASA.
+ *
+ * @author Sri Harsha Chilakapati
+ */
 interface Planetary {
     @GET("planetary/apod")
     suspend fun pictureOfTheDay(

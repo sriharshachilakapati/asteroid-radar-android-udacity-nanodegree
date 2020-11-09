@@ -1,7 +1,7 @@
 package com.udacity.asteroidradar.data.network
 
-import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.data.model.Asteroid
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,6 +50,22 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): MutableList<Asteroid> {
     }
 
     return asteroidList
+}
+
+/**
+ * Calls the specified function [block] with [this] as its receiver and returns its result.
+ *
+ * For detailed usage information see the documentation for
+ * [scope functions](https://kotlinlang.org/docs/reference/scope-functions.html#with).
+ */
+inline fun <T, R> T.with(block: T.() -> R): R = with(this, block)
+
+/**
+ * @return Seventh day from today formatted into the format expected by NeoWS API.
+ */
+fun getSeventhDayFromTodayFormatted(): String = Calendar.getInstance().with {
+    add(Calendar.DAY_OF_YEAR, 7)
+    return SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.ROOT).format(time)
 }
 
 private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
