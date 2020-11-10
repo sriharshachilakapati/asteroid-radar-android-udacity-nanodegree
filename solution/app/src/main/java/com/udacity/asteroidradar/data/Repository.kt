@@ -7,9 +7,7 @@ import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.data.model.PictureOfDay
 import com.udacity.asteroidradar.data.network.Backend
 import com.udacity.asteroidradar.data.network.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.formattedForNeoWS
-import com.udacity.asteroidradar.getDateAfterNumDays
-import com.udacity.asteroidradar.getToday
+import com.udacity.asteroidradar.data.persistence.AsteroidDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -64,7 +62,7 @@ class Repository {
     }
 
     private suspend fun refreshPictureOfTheDay() {
-        val response = Backend.planetary.pictureOfTheDay(getToday().formattedForNeoWS, true)
+        val response = Backend.planetary.pictureOfTheDay(getToday().formattedForPlanetaryAPI, false)
 
         if (!response.isSuccessful) {
             return
