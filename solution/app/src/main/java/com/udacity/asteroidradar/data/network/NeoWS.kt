@@ -17,11 +17,5 @@ interface NeoWS {
         @Query("start_date") startDate: String,
         @Query("end_date") endDate: String,
         @Query("api_key") apiKey: String = BuildConfig.NASA_API_KEY
-    ): Response<JSONObject>
-
-    @GET("neo/rest/v1/lookup")
-    suspend fun lookup(
-        @Query("asteroid_id") asteroidId: Int,
-        @Query("api_key") apiKey: String = BuildConfig.NASA_API_KEY
-    ): Response<JSONObject>
+    ): Response<String>
 }

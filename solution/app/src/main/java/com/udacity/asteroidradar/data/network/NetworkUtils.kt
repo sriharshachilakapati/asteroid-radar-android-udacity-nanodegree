@@ -1,15 +1,21 @@
 package com.udacity.asteroidradar.data.network
 
-import com.udacity.asteroidradar.Constants
 import com.udacity.asteroidradar.data.model.Asteroid
+import com.udacity.asteroidradar.formattedForNeoWS
+import com.udacity.asteroidradar.getDateAfterNumDays
 import org.json.JSONObject
-import java.text.SimpleDateFormat
-import java.util.*
 
-fun parseAsteroidsJsonResult(jsonResult: JSONObject): MutableList<Asteroid> {
+/**
+ * Helper function to parse the JSON response given by the NeoWS API into a list of our [Asteroid]
+ * objects.
+ *
+ * @param jsonResult The JSON response that came from the API.
+ * @return A [List] of [Asteroid]s.
+ */
+fun parseAsteroidsJsonResult(jsonResult: JSONObject): List<Asteroid> {
     val nearEarthObjectsJson = jsonResult.getJSONObject("near_earth_objects")
     val asteroidList = mutableListOf<Asteroid>()
-    val nextSevenDaysFormattedDates = getNextSevenDaysFormattedDates()
+    val nextSevenDaysFormattedDates = (0..7).map { getDateAfterNumDays(it).formattedForNeoWS }
 
     for (formattedDate in nextSevenDaysFormattedDates) {
         val dateAsteroidJsonArray = nearEarthObjectsJson.getJSONArray(formattedDate)
@@ -50,34 +56,4 @@ fun parseAsteroidsJsonResult(jsonResult: JSONObject): MutableList<Asteroid> {
     }
 
     return asteroidList
-}
-
-/**
- * Calls the specified function [block] with [this] as its receiver and returns its result.
- *
- * For detailed usage information see the documentation for
- * [scope functions](https://kotlinlang.org/docs/reference/scope-functions.html#with).
- */
-inline fun <T, R> T.with(block: T.() -> R): R = with(this, block)
-
-/**
- * @return Seventh day from today formatted into the format expected by NeoWS API.
- */
-fun getSeventhDayFromTodayFormatted(): String = Calendar.getInstance().with {
-    add(Calendar.DAY_OF_YEAR, 7)
-    return SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.ROOT).format(time)
-}
-
-private fun getNextSevenDaysFormattedDates(): ArrayList<String> {
-    val formattedDateList = ArrayList<String>()
-
-    val calendar = Calendar.getInstance()
-    for (i in 0..Constants.DEFAULT_END_DATE_DAYS) {
-        val currentTime = calendar.time
-        val dateFormat = SimpleDateFormat(Constants.API_QUERY_DATE_FORMAT, Locale.getDefault())
-        formattedDateList.add(dateFormat.format(currentTime))
-        calendar.add(Calendar.DAY_OF_YEAR, 1)
-    }
-
-    return formattedDateList
 }
