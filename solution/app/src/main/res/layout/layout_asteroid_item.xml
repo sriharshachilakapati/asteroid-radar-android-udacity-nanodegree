@@ -21,13 +21,11 @@
             android:id="@+id/asteroid_codename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_bold"
             android:text="@{asteroid.codename}"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="68347 (2001 KB67)" />
+            tools:text="68347 (2001 KB67)"
+            style="@style/ItemTitle" />
 
         <TextView
             android:id="@+id/asteroid_approach_date"
@@ -35,11 +33,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@{asteroid.closeApproachDate}"
-            android:textColor="@android:color/white"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/asteroid_codename"
-            tools:text="2020-02-08" />
+            tools:text="2020-02-08"
+            style="@style/ItemValue" />
 
         <ImageView
             android:id="@+id/asteroid_status_icon"
