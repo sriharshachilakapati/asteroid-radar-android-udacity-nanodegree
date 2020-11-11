@@ -5,7 +5,11 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.udacity.asteroidradar.data.model.Asteroid
 
-class AsteroidAdapter : RecyclerView.Adapter<AsteroidViewHolder>() {
+typealias ItemClickHandler = (Asteroid) -> Unit
+
+class AsteroidAdapter(private val itemClickHandler: ItemClickHandler) :
+    RecyclerView.Adapter<AsteroidViewHolder>() {
+
     private val diff = AsyncListDiffer(this, AsteroidDiffCallback())
 
     var items: List<Asteroid> = emptyList()
@@ -18,7 +22,7 @@ class AsteroidAdapter : RecyclerView.Adapter<AsteroidViewHolder>() {
         AsteroidViewHolder.create(parent)
 
     override fun onBindViewHolder(holder: AsteroidViewHolder, position: Int) =
-        holder.bind(items[position])
+        holder.bind(items[position], itemClickHandler)
 
     override fun getItemCount(): Int = items.size
 }

@@ -18,8 +18,9 @@ class AsteroidViewHolder private constructor(private val binding: LayoutAsteroid
         }
     }
 
-    fun bind(asteroid: Asteroid) = with(binding) {
+    fun bind(asteroid: Asteroid, itemClickHandler: ItemClickHandler) = with(binding) {
         this.asteroid = asteroid
+        root.setOnClickListener { itemClickHandler(asteroid) }
         executePendingBindings()
     }
 }

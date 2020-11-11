@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.udacity.asteroidradar.R
 import com.udacity.asteroidradar.data.Repository
+import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 import com.udacity.asteroidradar.ui.main.recycler.AsteroidAdapter
 
@@ -28,7 +30,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val asteroidsAdapter = AsteroidAdapter()
+        val asteroidsAdapter = AsteroidAdapter(this::onAsteroidClicked)
 
         val binding = FragmentMainBinding.inflate(inflater).apply {
             lifecycleOwner = this@MainFragment
@@ -40,6 +42,11 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
 
         return binding.root
+    }
+
+    private fun onAsteroidClicked(asteroid: Asteroid) {
+        val navigateTo = MainFragmentDirections.actionShowDetail(asteroid)
+        findNavController().navigate(navigateTo)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
