@@ -28,13 +28,13 @@ object Backend {
 
     private val retrofit by lazy {
         // Create the HTTP client used by Retrofit, enabling logging only in debug build type.
-        val okHttpClient = OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().apply {
-                    setLevel(HttpLoggingInterceptor.Level.BODY)
-                })
-            }
-        }.build()
+        val loggingLevel =
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(NasaAuthInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().apply { level = loggingLevel })
+            .build()
 
         // Need an explicit Moshi instance to add Kotlin support.
         val moshi = Moshi.Builder()
