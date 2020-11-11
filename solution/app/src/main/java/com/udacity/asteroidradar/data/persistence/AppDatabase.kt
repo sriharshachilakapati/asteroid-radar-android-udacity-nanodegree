@@ -7,8 +7,13 @@ import androidx.room.RoomDatabase
 import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.data.model.PictureOfDay
 
+/**
+ * The App's almighty database!!
+ *
+ * @author Sri Harsha Chilakapati
+ */
 @Database(entities = [Asteroid::class, PictureOfDay::class], version = 1)
-abstract class AsteroidDB : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun asteroidDao(): AsteroidDao
 
@@ -16,11 +21,11 @@ abstract class AsteroidDB : RoomDatabase() {
 
     companion object {
         @Volatile
-        private lateinit var INSTANCE: AsteroidDB
+        private lateinit var INSTANCE: AppDatabase
 
-        fun getInstance(context: Context): AsteroidDB = synchronized(this) {
+        fun getInstance(context: Context): AppDatabase = synchronized(this) {
             if (!::INSTANCE.isInitialized) {
-                INSTANCE = Room.databaseBuilder(context, AsteroidDB::class.java, "app_database")
+                INSTANCE = Room.databaseBuilder(context, AppDatabase::class.java, "app_database")
                     .fallbackToDestructiveMigration()
                     .build()
             }

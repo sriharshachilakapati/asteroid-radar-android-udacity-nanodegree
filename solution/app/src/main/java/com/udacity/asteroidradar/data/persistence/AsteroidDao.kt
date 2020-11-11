@@ -11,8 +11,22 @@ import com.udacity.asteroidradar.formattedForNeoWS
 import com.udacity.asteroidradar.getDateAfterNumDays
 import com.udacity.asteroidradar.getToday
 
+/**
+ * Data Access Object interface to access the asteroid data from the room database.
+ *
+ * @author Sri Harsha Chilakapati
+ */
 @Dao
 interface AsteroidDao {
+
+    /**
+     * Fetches all the saved asteroids between a [startDate] and [endDate] inclusive.
+     *
+     * @param startDate The inclusive starting date.
+     * @param endDate   The inclusive ending date.
+     *
+     * @return A [LiveData] instance which allows continuous observing of new Asteroids.
+     */
     @Query(
         """
             SELECT * FROM asteroids
@@ -23,9 +37,19 @@ interface AsteroidDao {
     )
     fun getAsteroids(startDate: String, endDate: String): LiveData<List<Asteroid>>
 
+    /**
+     * Deletes all the saved asteroids before the given [date].
+     *
+     * @param date The exclusive date.
+     */
     @Query("DELETE FROM asteroids WHERE Date(closeApproachDate) < Date(:date)")
     fun clearAsteroidsBefore(date: String)
 
+    /**
+     * Inserts a new [asteroid] into the table, replacing it if already existing.
+     *
+     * @param asteroid The [Asteroid] object to be inserted.
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(asteroid: Asteroid)
 }

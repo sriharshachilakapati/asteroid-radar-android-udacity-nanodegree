@@ -7,7 +7,7 @@ import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.data.model.PictureOfDay
 import com.udacity.asteroidradar.data.network.Backend
 import com.udacity.asteroidradar.data.network.parseAsteroidsJsonResult
-import com.udacity.asteroidradar.data.persistence.AsteroidDB
+import com.udacity.asteroidradar.data.persistence.AppDatabase
 import com.udacity.asteroidradar.data.persistence.getAsteroidsForCurrentWeek
 import com.udacity.asteroidradar.data.persistence.getAsteroidsForToday
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +26,7 @@ import retrofit2.HttpException
  */
 class Repository(context: Context) {
 
-    private val database = AsteroidDB.getInstance(context)
+    private val database = AppDatabase.getInstance(context)
 
     /**
      * LiveData instance that emits asteroids of next [Constants.DEFAULT_END_DATE_DAYS] days.
