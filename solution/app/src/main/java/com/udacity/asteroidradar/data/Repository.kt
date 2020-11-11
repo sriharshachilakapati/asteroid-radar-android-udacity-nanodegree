@@ -42,6 +42,7 @@ class Repository(context: Context) {
      */
     suspend fun refreshData() = withContext(Dispatchers.IO) {
         listOf(
+            async { database.asteroidDao().clearAsteroidsBefore(getToday().formattedForNeoWS) },
             async { refreshAsteroidsData() },
             async { refreshPictureOfTheDay() }
         ).awaitAll()
