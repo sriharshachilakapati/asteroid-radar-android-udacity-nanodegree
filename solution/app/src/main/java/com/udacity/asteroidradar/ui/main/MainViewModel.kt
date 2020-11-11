@@ -4,7 +4,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.udacity.asteroidradar.data.Repository
-import com.udacity.asteroidradar.ui.util.transformWithDefault
+import com.udacity.asteroidradar.ui.util.formatWith
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -15,12 +15,11 @@ class MainViewModel(
 
     val asteroids = repository.asteroids
 
-    val imageOfTheDayUrl = Transformations.map(repository.pictureOfDay) { it.url }
+    val imageOfTheDayUrl = Transformations.map(repository.pictureOfDay) { it?.url }
 
-    val imageOfTheDayContentDescription =
-        transformWithDefault(repository.pictureOfDay, pictureOfTheDayEmptyCD) {
-            pictureOfTheDayCDFormat.format(it.title)
-        }
+    val imageOfTheDayContentDescription = Transformations.map(repository.pictureOfDay) {
+        it?.title?.formatWith(pictureOfTheDayCDFormat) ?: pictureOfTheDayEmptyCD
+    }
 
     init {
         viewModelScope.launch {

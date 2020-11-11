@@ -13,13 +13,15 @@ class MainFragment : Fragment() {
     private val viewModel: MainViewModel by viewModels(factoryProducer = ::viewModelFactory)
 
     private val viewModelFactory by lazy {
+        val repository = Repository(requireContext().applicationContext)
+
         val defaultContentDescription =
             resources.getString(R.string.this_is_nasa_s_picture_of_day_showing_nothing_yet)
 
         val contentDescriptionFormat =
             resources.getString(R.string.nasa_picture_of_day_content_description_format)
 
-        MainViewModelFactory(Repository(), defaultContentDescription, contentDescriptionFormat)
+        MainViewModelFactory(repository, defaultContentDescription, contentDescriptionFormat)
     }
 
     override fun onCreateView(

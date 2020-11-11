@@ -1,8 +1,8 @@
 package com.udacity.asteroidradar.data
 
+import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.udacity.asteroidradar.Constants
+import com.udacity.asteroidradar.*
 import com.udacity.asteroidradar.data.model.Asteroid
 import com.udacity.asteroidradar.data.model.PictureOfDay
 import com.udacity.asteroidradar.data.network.Backend
@@ -17,24 +17,25 @@ import org.json.JSONObject
 /**
  * A repository to access planetary and NeoWS asteroid data.
  *
+ * @param context The context to use to get the DB instance
+ *
  * @author Sri Harsha Chilakapati
  */
-class Repository {
+class Repository(context: Context) {
 
-    private val _asteroids = MutableLiveData<List<Asteroid>>()
-    private val _pictureOfTheDay = MutableLiveData<PictureOfDay>()
+    private val database = AsteroidDB.getInstance(context)
 
     /**
      * LiveData instance that emits asteroids of next [Constants.DEFAULT_END_DATE_DAYS] days.
      */
     val asteroids: LiveData<List<Asteroid>>
-        get() = _asteroids
+        get() = database.asteroidDao().getAsteroids()
 
     /**
      * LiveData instance that emits the [PictureOfDay] instance.
      */
-    val pictureOfDay: LiveData<PictureOfDay>
-        get() = _pictureOfTheDay
+    val pictureOfDay: LiveData<PictureOfDay?>
+        get() = database.pictureOfDayDao().get()
 
     /**
      * Make an API call and attempt to fetch the data from the network.
@@ -58,7 +59,8 @@ class Repository {
 
         val body = JSONObject(response.body()!!)
         val parsed = parseAsteroidsJsonResult(body)
-        _asteroids.postValue(parsed)
+
+        parsed.forEach(database.asteroidDao()::insert)
     }
 
     private suspend fun refreshPictureOfTheDay() {
@@ -68,6 +70,6 @@ class Repository {
             return
         }
 
-        _pictureOfTheDay.postValue(response.body()!!)
+        database.pictureOfDayDao().save(response.body()!!)
     }
 }
