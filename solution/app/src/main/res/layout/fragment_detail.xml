@@ -93,8 +93,12 @@
 
                     <ImageView
                         android:id="@+id/help_button"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:paddingVertical="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="0dp"
+                        android:layout_width="48dp"
+                        android:scaleType="fitEnd"
+                        android:layout_height="48dp"
                         android:contentDescription="@string/help_about_astronomical_unit"
                         app:srcCompat="@drawable/ic_help_circle" />
 
