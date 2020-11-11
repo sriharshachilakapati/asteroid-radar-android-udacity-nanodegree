@@ -13,6 +13,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import retrofit2.HttpException
 
 /**
  * A repository to access planetary and NeoWS asteroid data.
@@ -49,28 +50,37 @@ class Repository(context: Context) {
     }
 
     private suspend fun refreshAsteroidsData() {
-        val response = Backend.neoWS.feed(
-            getToday().formattedForNeoWS,
-            getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS
-        )
+        try {
+            val response = Backend.neoWS.feed(
+                getToday().formattedForNeoWS,
+                getDateAfterNumDays(Constants.DEFAULT_END_DATE_DAYS).formattedForNeoWS
+            )
 
-        if (!response.isSuccessful) {
-            return
+            if (!response.isSuccessful) {
+                return
+            }
+
+            val body = JSONObject(response.body()!!)
+            val parsed = parseAsteroidsJsonResult(body)
+
+            parsed.forEach(database.asteroidDao()::insert)
+        } catch (e: HttpException) {
+            e.printStackTrace()
         }
-
-        val body = JSONObject(response.body()!!)
-        val parsed = parseAsteroidsJsonResult(body)
-
-        parsed.forEach(database.asteroidDao()::insert)
     }
 
     private suspend fun refreshPictureOfTheDay() {
-        val response = Backend.planetary.pictureOfTheDay(getToday().formattedForPlanetaryAPI, false)
+        try {
+            val response =
+                Backend.planetary.pictureOfTheDay(getToday().formattedForPlanetaryAPI, false)
 
-        if (!response.isSuccessful) {
-            return
+            if (!response.isSuccessful) {
+                return
+            }
+
+            database.pictureOfDayDao().save(response.body()!!)
+        } catch (e: HttpException) {
+            e.printStackTrace()
         }
-
-        database.pictureOfDayDao().save(response.body()!!)
     }
 }
