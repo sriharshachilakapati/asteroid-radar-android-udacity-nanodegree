@@ -1,5 +1,6 @@
 package com.udacity.asteroidradar.ui.main
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +14,14 @@ class MainViewModel(
     private val pictureOfTheDayCDFormat: String,
 ) : ViewModel() {
 
-    val asteroids = repository.asteroids
+    private val asteroidFilter = MutableLiveData(AsteroidFilter.CURRENT_WEEK)
+
+    val asteroids = Transformations.switchMap(asteroidFilter) {
+        when (it!!) {
+            AsteroidFilter.CURRENT_WEEK -> repository.asteroidsThisWeek
+            AsteroidFilter.ONLY_TODAY -> repository.asteroidsToday
+        }
+    }
 
     val imageOfTheDayUrl = Transformations.map(repository.pictureOfDay) { it?.url }
 
@@ -22,9 +30,15 @@ class MainViewModel(
     }
 
     init {
-        viewModelScope.launch {
-            repository.refreshData()
-        }
+        viewModelScope.launch { repository.refreshData() }
     }
 
+    fun setAsteroidFilter(filter: AsteroidFilter) {
+        asteroidFilter.postValue(filter)
+    }
+}
+
+enum class AsteroidFilter {
+    CURRENT_WEEK,
+    ONLY_TODAY
 }

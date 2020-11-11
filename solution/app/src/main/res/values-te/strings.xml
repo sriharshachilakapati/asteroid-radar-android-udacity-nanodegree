@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ఉల్కా సూచిక</string>
+    <string name="next_week_asteroids">ఈ వారం ఉల్కలను చూపు</string>
+    <string name="today_asteroids">ఈ రోజుటి ఉల్కలను చూపు</string>
+    <string name="close_approach_data_title">దగ్గరగా రాబోవు తేదీ</string>
+    <string name="absolute_magnitude_title">ప్రకాశించు దూరం</string>
+    <string name="estimated_diameter_title">సుమారైన అడ్డుకొలత</string>
+    <string name="distance_from_earth_title">భూమి నుండి దూరం</string>
+    <string name="image_of_the_day">ఇవాల్టి చిత్రము</string>
+    <string name="astronomica_unit_explanation">ఆస్ట్రనామికల్ యూనిట్ (au) అనేది దూరాన్ని కొలిచే విధానం. సుమారుగా చెప్పాలి అంటే ఆస్ట్రనామికల్ యూనిట్ అనేది సూర్యుడి నుండి భూమి దాకా ఉన్న దూరం. అనగా 150 మిలియన్ కిలోమీటర్లు (93 మైళ్ళు)</string>
+    <string name="astronomical_unit_explanation_button">ఆస్ట్రనామికల్ యూనిట్ యొక్క నిర్వచనం</string>
+    <string name="potentially_hazardous_asteroid_image">ప్రమాదం కాగల ఉల్క చిత్రం</string>
+    <string name="not_hazardous_asteroid_image">ఏ ప్రమాదమూ కలిగించని ఉల్క చిత్రం</string>
+    <string name="this_is_nasa_s_picture_of_day_showing_nothing_yet">ఇది నాసా ఎంపిక చేసిన ఇవాల్టి చిత్రం. ప్రస్తుతం ఏమీ చూపించబడుటలేదు</string>
+    <string name="nasa_picture_of_day_content_description_format">ఇవాల్టి నాసా ఎంపిక చేసిన చిత్రం: %s</string>
+    <string name="help_about_astronomical_unit">ఆస్ట్రనామికల్ యూనిట్ గురించిన సహాయ వివరణ</string>
+    <string name="relative_velocity_title">సాపేక్ష వేగము</string>
+</resources>

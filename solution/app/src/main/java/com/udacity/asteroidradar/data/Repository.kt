@@ -8,6 +8,8 @@ import com.udacity.asteroidradar.data.model.PictureOfDay
 import com.udacity.asteroidradar.data.network.Backend
 import com.udacity.asteroidradar.data.network.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.data.persistence.AsteroidDB
+import com.udacity.asteroidradar.data.persistence.getAsteroidsForCurrentWeek
+import com.udacity.asteroidradar.data.persistence.getAsteroidsForToday
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -29,8 +31,14 @@ class Repository(context: Context) {
     /**
      * LiveData instance that emits asteroids of next [Constants.DEFAULT_END_DATE_DAYS] days.
      */
-    val asteroids: LiveData<List<Asteroid>>
-        get() = database.asteroidDao().getAsteroids()
+    val asteroidsThisWeek: LiveData<List<Asteroid>>
+        get() = database.asteroidDao().getAsteroidsForCurrentWeek()
+
+    /**
+     * LiveData instance that emits asteroids of the current day.
+     */
+    val asteroidsToday: LiveData<List<Asteroid>>
+        get() = database.asteroidDao().getAsteroidsForToday()
 
     /**
      * LiveData instance that emits the [PictureOfDay] instance.
