@@ -4,3 +4,4 @@ captures/
 *.iml
 *.ipr
 local.properties
+.gradle/
